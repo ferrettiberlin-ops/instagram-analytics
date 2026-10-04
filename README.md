@@ -20,4 +20,4 @@ The extension must not be distributed with a service-role key. The anon key is n
 5. Open Instagram, open the extension popup, enter the assigned Participant ID, and enable tracking.
 6. Use the popup's **Disable tracking** control to stop collection.
 
-The extension is intentionally limited to Instagram host pages and does not inject page UI. It uses a passive `MutationObserver`; it does not intercept network traffic or attempt to bypass Instagram controls.
+The extension is intentionally limited to the Instagram `/reels/` hub and does not inject page UI. It ignores feed, profile, explore, search, and individual `/reel/<id>/` pages. It uses a passive `MutationObserver`; it does not intercept network traffic or attempt to bypass Instagram controls.

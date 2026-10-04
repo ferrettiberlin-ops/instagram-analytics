@@ -25,6 +25,10 @@
     }
   }
 
+  function isReelsHub() {
+    return /^\/reels\/?$/i.test(window.location.pathname);
+  }
+
   function isSponsored(link) {
     let current = link;
     for (let depth = 0; current && depth < 4; depth += 1) {
@@ -52,7 +56,7 @@
   }
 
   function inspectLinks(root) {
-    if (!trackingEnabled) {
+    if (!trackingEnabled || !isReelsHub()) {
       return;
     }
 
