@@ -52,7 +52,7 @@ grant execute on function public.purge_hkust_study_data() to postgres, service_r
 
 select cron.schedule(
   'hkust-study-data-purge',
-  '0 3 31 12 *',
+  '0 19 30 12 *',
   $$select public.purge_hkust_study_data()$$
 );
 
@@ -61,6 +61,20 @@ create index if not exists hkust_stream_logs_participant_sequence_idx
 
 create unique index if not exists hkust_stream_logs_session_sequence_idx
   on public.hkust_stream_logs (participant_id, session_id, sequence_index);
+
+create or replace view public.hkust_stream_logs_hkt
+with (security_invoker = true)
+as
+select
+  id,
+  participant_id,
+  session_id,
+  scrolled_at,
+  scrolled_at at time zone 'Asia/Hong_Kong' as scrolled_at_hkt,
+  canonical_url,
+  sequence_index,
+  is_sponsored
+from public.hkust_stream_logs;
 
 alter table public.hkust_research_profiles enable row level security;
 alter table public.hkust_consent_records enable row level security;

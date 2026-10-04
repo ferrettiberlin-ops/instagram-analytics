@@ -69,6 +69,46 @@
     });
   }
 
+  function recordReel(link) {
+    if (!trackingEnabled || !isReelsHub()) {
+      return;
+    }
+
+    const href = typeof link === 'string' ? link : link.href;
+    const canonicalUrl = canonicalizeReelUrl(href);
+    if (!canonicalUrl || reelIds.has(canonicalUrl)) {
+      return;
+    }
+
+    reelIds.add(canonicalUrl);
+    sequenceIndex += 1;
+    pendingRecords.push({
+      session_id: sessionId,
+      canonical_url: canonicalUrl,
+      sequence_index: sequenceIndex,
+      is_sponsored: link instanceof HTMLAnchorElement ? isSponsored(link) : false,
+      scrolled_at: new Date().toISOString()
+    });
+
+    if (pendingRecords.length >= BATCH_SIZE) {
+      sendPendingRecords();
+    }
+  }
+
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+        recordReel(entry.target);
+      }
+    }
+  }, { threshold: [0.25] });
+
+  function recordCurrentReelPage() {
+    if (/^\/reels?\/(?!audio(?:\/|$))[^/]+\/?$/i.test(window.location.pathname)) {
+      recordReel(window.location.href);
+    }
+  }
+
   function inspectLinks(root) {
     if (!trackingEnabled || !isReelsHub()) {
       return;
@@ -83,29 +123,13 @@
     }
 
     for (const link of links) {
-      const canonicalUrl = canonicalizeReelUrl(link.href);
-      if (!canonicalUrl || reelIds.has(canonicalUrl)) {
-        continue;
-      }
-
-      reelIds.add(canonicalUrl);
-      sequenceIndex += 1;
-      pendingRecords.push({
-        session_id: sessionId,
-        canonical_url: canonicalUrl,
-        sequence_index: sequenceIndex,
-        is_sponsored: isSponsored(link),
-        scrolled_at: new Date().toISOString()
-      });
-
-      if (pendingRecords.length >= BATCH_SIZE) {
-        sendPendingRecords();
-      }
+      visibilityObserver.observe(link);
     }
   }
 
   const observer = new MutationObserver((mutations) => {
     requestFirstRunPrompt();
+    recordCurrentReelPage();
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         if (node.nodeType === Node.ELEMENT_NODE) {
@@ -125,6 +149,7 @@
     if (areaName === 'local' && changes.trackingEnabled) {
       trackingEnabled = changes.trackingEnabled.newValue === true;
       if (trackingEnabled) {
+        recordCurrentReelPage();
         inspectLinks(document.body);
       }
     } else if (areaName === 'local' && changes.participantId) {
@@ -135,6 +160,7 @@
   if (document.body) {
     observer.observe(document.body, { childList: true, subtree: true });
     requestFirstRunPrompt();
+    recordCurrentReelPage();
     inspectLinks(document.body);
   }
 })();

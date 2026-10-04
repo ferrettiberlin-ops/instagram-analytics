@@ -24,7 +24,7 @@ The extension is intentionally limited to the Instagram Reels experience at `/re
 
 On the first visit to `/reels/`, the extension opens a private onboarding tab for the HKUST SID, age bracket, cultural identity, and HKUST school. The profile is submitted before tracking is enabled. Later visits go directly to tracking unless the participant disables it.
 
-Each onboarding consent is recorded with a consent version and timestamp, and each content-script lifetime receives a session UUID so sequence indexes can be reconstructed by session. The Supabase migration schedules permanent deletion of profiles, consent records, and stream logs on December 31, 2026 at 03:00 UTC.
+Each onboarding consent is recorded with a consent version and timestamp, and each content-script lifetime receives a session UUID so sequence indexes can be reconstructed by session. Stored timestamps remain UTC, and `hkust_stream_logs_hkt` exposes `scrolled_at_hkt` for Hong Kong-time review. The Supabase migration schedules permanent deletion of profiles, consent records, and stream logs on December 31, 2026 at 03:00 HKT.
 
 For a hardened production deployment, deploy the scaffold in `supabase/functions/ingest-study-data` with the Supabase service-role key stored as a server secret, then migrate the extension transport to that endpoint before revoking the direct insert policies. Never place the service-role key in `config.js` or the extension bundle.
 
