@@ -18,7 +18,7 @@
   function canonicalizeReelUrl(href) {
     try {
       const url = new URL(href, window.location.href);
-      if (url.origin !== window.location.origin || !/^\/reels?\//i.test(url.pathname)) {
+      if (url.origin !== window.location.origin || !/^\/reels?\/(?!audio(?:\/|$))[^/]+\/?$/i.test(url.pathname)) {
         return null;
       }
       return `${url.origin}${url.pathname}`;
@@ -28,7 +28,8 @@
   }
 
   function isReelsHub() {
-    return /^\/reels(?:\/|$)/i.test(window.location.pathname);
+    return /^\/reels\/?$/i.test(window.location.pathname)
+      || /^\/reels?\/(?!audio(?:\/|$))[^/]+\/?$/i.test(window.location.pathname);
   }
 
   function requestFirstRunPrompt() {

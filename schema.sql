@@ -26,7 +26,10 @@ create table if not exists public.hkust_stream_logs (
   sequence_index integer not null check (sequence_index > 0),
     is_sponsored boolean not null default false,
     constraint hkust_stream_logs_canonical_url_check
-      check (canonical_url ~ '^https://www\.instagram\.com/reels?/.+'),
+      check (
+        canonical_url ~ '^https://www\.instagram\.com/reels?/[^/]+/?$'
+        and canonical_url !~ '^https://www\.instagram\.com/reels?/audio(/|$)'
+      ),
     constraint hkust_stream_logs_canonical_url_length_check
       check (char_length(canonical_url) <= 2048)
 );

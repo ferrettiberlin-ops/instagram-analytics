@@ -47,7 +47,7 @@ function validateRecords(records: unknown[]) {
     const value = record as Record<string, unknown>;
     const canonicalUrl = requiredString(value.canonical_url, 'canonical_url', 2048);
     const parsedUrl = new URL(canonicalUrl);
-    if (parsedUrl.origin !== 'https://www.instagram.com' || !/^\/reels?\/.+/i.test(parsedUrl.pathname)) {
+    if (parsedUrl.origin !== 'https://www.instagram.com' || !/^\/reels?\/(?!audio(?:\/|$))[^/]+\/?$/i.test(parsedUrl.pathname)) {
       throw new Error('Invalid canonical_url');
     }
     const sequenceIndex = value.sequence_index;
