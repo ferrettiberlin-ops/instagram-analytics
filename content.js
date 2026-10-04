@@ -17,7 +17,7 @@
   function canonicalizeReelUrl(href) {
     try {
       const url = new URL(href, window.location.href);
-      if (url.origin !== window.location.origin || !/^\/reel\//i.test(url.pathname)) {
+      if (url.origin !== window.location.origin || !/^\/reels?\//i.test(url.pathname)) {
         return null;
       }
       return `${url.origin}${url.pathname}`;
@@ -27,7 +27,7 @@
   }
 
   function isReelsHub() {
-    return /^\/reels\/?$/i.test(window.location.pathname);
+    return /^\/reels(?:\/|$)/i.test(window.location.pathname);
   }
 
   function requestFirstRunPrompt() {
@@ -77,7 +77,7 @@
       links.push(root);
     }
     if (root.querySelectorAll) {
-      links.push(...root.querySelectorAll('a[href*="/reel/"]'));
+      links.push(...root.querySelectorAll('a[href*="/reel"]'));
     }
 
     for (const link of links) {
