@@ -14,6 +14,9 @@
     input { box-sizing: border-box; width: 100%; padding: 10px 11px; border: 1px solid #cbd3e1; border-radius: 6px; font: inherit; }
     select { box-sizing: border-box; width: 100%; padding: 10px 11px; border: 1px solid #cbd3e1; border-radius: 6px; font: inherit; background: white; }
     .other-input { margin-top: 8px; }
+    .consent-frame { width: 100%; height: 280px; margin: 16px 0 10px; border: 1px solid #cbd3e1; background: white; }
+    .consent-confirmation { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.4; }
+    .consent-confirmation input { width: 18px; height: 18px; flex: 0 0 auto; margin: 1px 0 0; }
     button { width: 100%; margin-top: 12px; padding: 10px 12px; border: 0; border-radius: 6px; color: white; background: #145da0; font: inherit; font-weight: 700; cursor: pointer; }
     button.secondary { color: #21405d; background: #dce7f2; }
     .status { margin: 16px 0; padding: 12px; border-left: 3px solid #1a8754; background: #eaf7ef; }
@@ -81,6 +84,11 @@
         <option>My stance is best described as (Please specify)</option>
       </select>
       <input class="other-input" id="ideological-other" type="text" maxlength="255" placeholder="Please specify stance" hidden>
+      <iframe class="consent-frame" title="Research disclosure and informed consent" src="consent.html"></iframe>
+      <label class="consent-confirmation">
+        <input id="consent-confirmation" type="checkbox" required>
+        <span>I confirm that I am 18 years or older, understand the pseudonymized telemetry and collection of my HKUST SID, and agree to the tracking parameters.</span>
+      </label>
       <button type="submit">Enable tracking</button>
     </form>
 

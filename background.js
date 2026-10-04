@@ -60,7 +60,8 @@ async function saveProfile(profile) {
   });
 
   if (!response.ok) {
-    throw new Error(`Supabase profile request returned HTTP ${response.status}`);
+    const details = await response.text();
+    throw new Error(`Supabase profile request returned HTTP ${response.status}: ${details}`);
   }
 }
 

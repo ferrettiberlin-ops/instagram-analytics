@@ -8,6 +8,7 @@ const ageBracketInput = document.querySelector('#age-bracket');
 const culturalIdentityInput = document.querySelector('#cultural-identity');
 const hkustSchoolInput = document.querySelector('#hkust-school');
 const ideologicalAlignmentInput = document.querySelector('#ideological-alignment');
+const consentInput = document.querySelector('#consent-confirmation');
 
 function getAnswer(select, otherInput) {
   return select.value.includes('Please specify') ? otherInput.value.trim() : select.value;
@@ -52,6 +53,10 @@ setupView.addEventListener('submit', async (event) => {
   const participantId = participantInput.value.trim();
   if (!participantId) {
     showMessage('Enter the assigned Participant ID.');
+    return;
+  }
+  if (!consentInput.checked) {
+    showMessage('You must confirm informed consent before enabling tracking.');
     return;
   }
 

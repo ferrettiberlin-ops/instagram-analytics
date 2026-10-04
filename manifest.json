@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "HKUST Reel Viewing Study",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Participant-controlled collection of Instagram Reel viewing sequences for the HKUST SOSC 3000L study.",
   "permissions": [
     "storage",
