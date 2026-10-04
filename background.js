@@ -49,15 +49,19 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 });
 
 async function saveProfile(profile) {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/hkust_research_profiles?on_conflict=participant_id`, {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/hkust_research_profiles`, {
     method: 'POST',
     headers: {
       apikey: SUPABASE_ANON_KEY,
       'Content-Type': 'application/json',
-      Prefer: 'resolution=ignore-duplicates,return=minimal'
+      Prefer: 'return=minimal'
     },
     body: JSON.stringify(profile)
   });
+
+  if (response.status === 409) {
+    return;
+  }
 
   if (!response.ok) {
     const details = await response.text();
