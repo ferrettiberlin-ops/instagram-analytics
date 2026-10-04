@@ -1,0 +1,112 @@
+<section class="research-consent" aria-labelledby="research-consent-title">
+  <style>
+    .research-consent {
+      box-sizing: border-box;
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: 24px;
+      color: #172033;
+      background: #ffffff;
+      font: 14px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .research-consent__body {
+      max-height: 56vh;
+      overflow-y: auto;
+      padding: 0 16px 0 0;
+      border-bottom: 1px solid #d8dee9;
+    }
+
+    .research-consent h1 {
+      margin: 0 0 16px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .research-consent h2 {
+      margin: 24px 0 8px;
+      font-size: 16px;
+    }
+
+    .research-consent p { margin: 0 0 12px; }
+    .research-consent ul { margin: 0 0 12px; padding-left: 22px; }
+    .research-consent li { margin: 0 0 6px; }
+    .research-consent strong { font-weight: 700; }
+
+    .research-consent__confirmation {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 18px;
+      font-weight: 600;
+    }
+
+    .research-consent__confirmation input {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      margin: 2px 0 0;
+    }
+  </style>
+
+  <div class="research-consent__body">
+    <h1 id="research-consent-title">HKUST SOSC 3000L — Algorithmic Audit Project Participant Information Sheet &amp; Informed Consent Agreement</h1>
+
+    <h2>Project Context</h2>
+    <p>This student-led academic project explores how recommendation engines segment and distribute content streams across the diverse student ecosystem of The Hong Kong University of Science and Technology (HKUST). The study examines chronological Instagram Reel sequences viewed while a participant manually browses the Instagram Reels hub.</p>
+    <p>The study compares demographic independent variables, including <strong>age bracket</strong>, <strong>HKUST school</strong>, and simplified <strong>cultural identity</strong> categories, against automated chronological Reel stream sequences. Cultural identity options are <strong>Local Hong Kong Resident (Chinese Heritage)</strong>, <strong>Local Hong Kong Resident (Generational Ethnic Minority)</strong>, <strong>Expatriate</strong>, <strong>Immigrant / First-Generation Resettlement</strong>, and <strong>Third Culture Kid (TCK)</strong>.</p>
+
+    <h2>What the Extension Collects</h2>
+    <p>While enabled on the Instagram <code>/reels/</code> hub, the extension records:</p>
+    <ul>
+      <li>The participant’s <strong>HKUST SID</strong>, which is a direct university identifier and is stored to link the record to the study profile.</li>
+      <li>The selected age bracket, HKUST school, and cultural identity category.</li>
+      <li>Clean, canonical Instagram Reel URLs discovered in chronological order as Instagram renders them.</li>
+      <li>The time each Reel link is recorded, its sequence index, and whether the surrounding content appears to be sponsored.</li>
+    </ul>
+    <p>The extension does not infer private traits, read account credentials, or access information that Instagram does not render in the page.</p>
+
+    <h2>Data Collection Limits (The Privacy Shield)</h2>
+    <p>The extension does <strong>not</strong> collect:</p>
+    <ul>
+      <li>Names, ITSC email addresses, telephone numbers, passwords, or payment information.</li>
+      <li>Direct messages, comments, follower networks, likes, account passwords, or personal profile content.</li>
+      <li>Browsing activity on other websites or cross-site tracking. The content script is inactive outside <code>instagram.com</code> and only records Reel links on the Instagram <code>/reels/</code> hub.</li>
+      <li>Network interception, page layout changes, injected page markers, or hidden browser activity.</li>
+    </ul>
+    <p>Because the HKUST SID is collected, the dataset is <strong>pseudonymized rather than anonymous at collection</strong>. The research team will use the SID only for the approved study linkage and will not publish it in reports or presentations.</p>
+
+    <h2>Data Security and Lifecycle</h2>
+    <p>Records will be stored in an encrypted relational database cluster managed for the study. Access is restricted to the authorized SOSC 3000L group project members and approved academic supervisors. The data will be used only for this academic project, will not be sold or used for advertising, and will not be shared with Instagram or other commercial parties.</p>
+    <p>The project team will permanently delete the collected records and the linkage profile upon conclusion of the Fall 2026 academic term, no later than <strong>December 31, 2026</strong>, subject to any retention requirement imposed by HKUST or the applicable ethics approval.</p>
+
+    <h2>Voluntary Participation and Withdrawal</h2>
+    <p>Participation is <strong>100% voluntary</strong>. You may decline before activation or withdraw at any time without academic, financial, or other penalty. To stop future collection, open the Chrome extensions page, right-click the extension, and choose <strong>Remove from Chrome</strong>. You may also disable tracking in the extension dashboard.</p>
+    <p>Uninstalling stops future collection; it does not automatically erase records already submitted. For deletion, access, correction, or other Personal Data (Privacy) Ordinance (PDPO) requests concerning submitted records, contact the study team using the approved contact details supplied by the course or ethics approval. The project team will respond according to the approved HKUST research-ethics process.</p>
+
+    <h2>Institutional Review and Contact</h2>
+    <p>This project is conducted for <strong>HKUST SOSC 3000L</strong> and must be operated consistently with the approved HKUST Human and Artefacts Research Ethics Committee (HAREC) protocol. The student team must insert the approved principal investigator, supervisor, HAREC reference, and contact details before participant distribution:</p>
+    <ul>
+      <li>Principal investigator / course supervisor: <strong>[insert approved name and contact]</strong></li>
+      <li>Student research team: <strong>[insert approved contact]</strong></li>
+      <li>HAREC reference or contact: <strong>[insert approved reference/contact]</strong></li>
+    </ul>
+
+    <h2>Informed Consent</h2>
+    <p>By checking the box below, I confirm that:</p>
+    <ul>
+      <li>I am <strong>18 years of age or older</strong>.</li>
+      <li>I have read and understood this information sheet.</li>
+      <li>I understand that the study collects my HKUST SID as a direct identifier, together with the stated demographic categories and Reel-stream telemetry.</li>
+      <li>I understand that the telemetry is pseudonymized for analysis but is not anonymous at the point of collection.</li>
+      <li>I understand the tracking scope, data security, retention, and withdrawal terms above.</li>
+      <li>I voluntarily agree to participate in the study and to enable the extension under these parameters.</li>
+    </ul>
+    <p><strong>Required consent statement:</strong> I confirm that I am 18 years or older, understand the pseudonymized nature of the telemetry and the collection of my HKUST SID, and agree to the tracking parameters described above.</p>
+  </div>
+
+  <label class="research-consent__confirmation">
+    <input type="checkbox" name="researchConsent" required>
+    <span>I confirm that I am 18 years or older, understand the pseudonymized nature of the telemetry and the collection of my HKUST SID, and agree to the tracking parameters described above.</span>
+  </label>
+</section>
