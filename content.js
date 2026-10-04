@@ -8,6 +8,7 @@
   let pendingRecords = [];
   let trackingEnabled = false;
   let promptRequested = false;
+  let flushTimer = null;
 
   function readTrackingState() {
     chrome.storage.local.get(['trackingEnabled'], (settings) => {
@@ -60,6 +61,7 @@
       return;
     }
 
+    flushTimer = null;
     const batch = pendingRecords;
     pendingRecords = [];
     chrome.runtime.sendMessage({ type: 'STREAM_BATCH', records: batch }, () => {
@@ -67,6 +69,15 @@
         pendingRecords = batch.concat(pendingRecords);
       }
     });
+  }
+
+  function scheduleBatchFlush() {
+    if (flushTimer !== null || pendingRecords.length === 0) {
+      return;
+    }
+    flushTimer = window.setTimeout(() => {
+      sendPendingRecords();
+    }, 2000);
   }
 
   function recordReel(link) {
@@ -92,6 +103,8 @@
 
     if (pendingRecords.length >= BATCH_SIZE) {
       sendPendingRecords();
+    } else {
+      scheduleBatchFlush();
     }
   }
 
@@ -163,4 +176,11 @@
     recordCurrentReelPage();
     inspectLinks(document.body);
   }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      sendPendingRecords();
+    }
+  });
+  window.addEventListener('pagehide', sendPendingRecords);
 })();
