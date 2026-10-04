@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HKUST Reel Viewing Study</title>
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { width: 320px; margin: 0; color: #172033; background: #f5f7fb; }
+    main { padding: 22px; }
+    h1 { margin: 0 0 8px; font-size: 18px; }
+    p { margin: 0 0 18px; color: #526079; line-height: 1.45; font-size: 13px; }
+    label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 700; }
+    input { box-sizing: border-box; width: 100%; padding: 10px 11px; border: 1px solid #cbd3e1; border-radius: 6px; font: inherit; }
+    button { width: 100%; margin-top: 12px; padding: 10px 12px; border: 0; border-radius: 6px; color: white; background: #145da0; font: inherit; font-weight: 700; cursor: pointer; }
+    button.secondary { color: #21405d; background: #dce7f2; }
+    .status { margin: 16px 0; padding: 12px; border-left: 3px solid #1a8754; background: #eaf7ef; }
+    .status strong, .status span { display: block; }
+    .status span { margin-top: 4px; color: #286341; font-size: 13px; }
+    [hidden] { display: none; }
+    #message { min-height: 18px; margin-top: 10px; color: #a22b2b; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>HKUST Reel Viewing Study</h1>
+    <p>Your participant ID links this browser session to the study ledger. Tracking is active only after you enable it.</p>
+
+    <form id="setup-view">
+      <label for="participant-id">Participant ID</label>
+      <input id="participant-id" name="participantId" autocomplete="off" required pattern="[A-Za-z0-9-]+" maxlength="64">
+      <button type="submit">Enable tracking</button>
+    </form>
+
+    <section id="active-view" hidden>
+      <div class="status">
+        <strong>Active Dashboard</strong>
+        <span id="active-participant"></span>
+      </div>
+      <p>Viewing sequence data is sent in small batches while you browse Instagram Reels.</p>
+      <button id="disable-tracking" class="secondary" type="button">Disable tracking</button>
+    </section>
+    <div id="message" role="status" aria-live="polite"></div>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

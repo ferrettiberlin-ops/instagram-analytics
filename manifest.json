@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "HKUST Reel Viewing Study",
+  "version": "1.0.0",
+  "description": "Participant-controlled collection of Instagram Reel viewing sequences for the HKUST SOSC 3000L study.",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.instagram.com/*",
+    "https://*.supabase.co/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "HKUST Reel Viewing Study",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "world": "ISOLATED"
+    }
+  ]
+}
