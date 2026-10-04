@@ -23,3 +23,9 @@ The extension must not be distributed with a service-role key. The anon key is n
 The extension is intentionally limited to the Instagram Reels experience at `/reels/` and `/reels/<id>/` and does not inject page UI. It ignores feed, profile, explore, and search pages. It uses a passive `MutationObserver`; it does not intercept network traffic or attempt to bypass Instagram controls.
 
 On the first visit to `/reels/`, the extension opens a private onboarding tab for the HKUST SID, age bracket, cultural identity, and HKUST school. The profile is submitted before tracking is enabled. Later visits go directly to tracking unless the participant disables it.
+
+Each onboarding consent is recorded with a consent version and timestamp, and each content-script lifetime receives a session UUID so sequence indexes can be reconstructed by session. The Supabase migration schedules permanent deletion of profiles, consent records, and stream logs on December 31, 2026 at 03:00 UTC.
+
+For a hardened production deployment, deploy the scaffold in `supabase/functions/ingest-study-data` with the Supabase service-role key stored as a server secret, then migrate the extension transport to that endpoint before revoking the direct insert policies. Never place the service-role key in `config.js` or the extension bundle.
+
+The Edge Function deployment requires `SUPABASE_SERVICE_ROLE_KEY` and `STUDY_INGEST_TOKEN` as Supabase Function secrets. The current unpacked extension intentionally remains on the direct insert path until the authenticated function transport is configured and tested.

@@ -4,6 +4,7 @@ import {
   STREAM_TABLE
 } from './config.js';
 
+const CONSENT_VERSION = '2026-10-04-v1';
 let onboardingTabId = null;
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
@@ -49,6 +50,11 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 });
 
 async function saveProfile(profile) {
+  const profilePayload = {
+    ...profile,
+    consent_version: CONSENT_VERSION,
+    consented_at: new Date().toISOString()
+  };
   const response = await fetch(`${SUPABASE_URL}/rest/v1/hkust_research_profiles`, {
     method: 'POST',
     headers: {
@@ -56,10 +62,11 @@ async function saveProfile(profile) {
       'Content-Type': 'application/json',
       Prefer: 'return=minimal'
     },
-    body: JSON.stringify(profile)
+    body: JSON.stringify(profilePayload)
   });
 
   if (response.status === 409) {
+    await saveConsentRecord(profile.participant_id);
     return;
   }
 
@@ -67,6 +74,31 @@ async function saveProfile(profile) {
     const details = await response.text();
     throw new Error(`Supabase profile request returned HTTP ${response.status}: ${details}`);
   }
+
+  await saveConsentRecord(profile.participant_id);
+}
+
+async function saveConsentRecord(participantId) {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/hkust_consent_records`, {
+    method: 'POST',
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      'Content-Type': 'application/json',
+      Prefer: 'return=minimal'
+    },
+    body: JSON.stringify({
+      participant_id: participantId,
+      consent_version: CONSENT_VERSION,
+      consented_at: new Date().toISOString()
+    })
+  });
+
+  if (response.status === 409 || response.ok) {
+    return;
+  }
+
+  const details = await response.text();
+  throw new Error(`Supabase consent request returned HTTP ${response.status}: ${details}`);
 }
 
 async function submitBatch(records) {
@@ -81,6 +113,7 @@ async function submitBatch(records) {
 
   const payload = records.map((record) => ({
     participant_id: settings.participantId,
+    session_id: record.session_id,
     scrolled_at: record.scrolled_at,
     canonical_url: record.canonical_url,
     sequence_index: record.sequence_index,

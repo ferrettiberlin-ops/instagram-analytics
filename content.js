@@ -2,6 +2,7 @@
   'use strict';
 
   const BATCH_SIZE = 10;
+  const sessionId = crypto.randomUUID();
   const reelIds = new Set();
   let sequenceIndex = 0;
   let pendingRecords = [];
@@ -89,6 +90,7 @@
       reelIds.add(canonicalUrl);
       sequenceIndex += 1;
       pendingRecords.push({
+        session_id: sessionId,
         canonical_url: canonicalUrl,
         sequence_index: sequenceIndex,
         is_sponsored: isSponsored(link),
