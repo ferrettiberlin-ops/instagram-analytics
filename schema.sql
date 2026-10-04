@@ -26,6 +26,12 @@ create index if not exists hkust_stream_logs_participant_sequence_idx
 alter table public.hkust_research_profiles enable row level security;
 alter table public.hkust_stream_logs enable row level security;
 
+create policy "study clients can register profiles"
+  on public.hkust_research_profiles
+  for insert
+  to anon, authenticated
+  with check (true);
+
 create policy "study clients can append stream logs"
   on public.hkust_stream_logs
   for insert

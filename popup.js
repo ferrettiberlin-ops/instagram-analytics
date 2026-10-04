@@ -4,6 +4,9 @@ const participantInput = document.querySelector('#participant-id');
 const activeParticipant = document.querySelector('#active-participant');
 const disableButton = document.querySelector('#disable-tracking');
 const message = document.querySelector('#message');
+const ageBracketInput = document.querySelector('#age-bracket');
+const culturalIdentityInput = document.querySelector('#cultural-identity');
+const hkustSchoolInput = document.querySelector('#hkust-school');
 
 function showMessage(text) {
   message.textContent = text;
@@ -30,6 +33,18 @@ setupView.addEventListener('submit', async (event) => {
   }
 
   try {
+    const profileResponse = await chrome.runtime.sendMessage({
+      type: 'PROFILE_SETUP',
+      profile: {
+        participant_id: participantId,
+        age_bracket: ageBracketInput.value,
+        cultural_identity: culturalIdentityInput.value,
+        hkust_school: hkustSchoolInput.value
+      }
+    });
+    if (!profileResponse?.ok) {
+      throw new Error('Profile setup failed');
+    }
     await chrome.storage.local.set({ participantId, trackingEnabled: true });
     render({ participantId, trackingEnabled: true });
     showMessage('');

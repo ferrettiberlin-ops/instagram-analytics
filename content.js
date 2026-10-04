@@ -6,6 +6,7 @@
   let sequenceIndex = 0;
   let pendingRecords = [];
   let trackingEnabled = false;
+  let promptRequested = false;
 
   function readTrackingState() {
     chrome.storage.local.get(['trackingEnabled'], (settings) => {
@@ -27,6 +28,17 @@
 
   function isReelsHub() {
     return /^\/reels\/?$/i.test(window.location.pathname);
+  }
+
+  function requestFirstRunPrompt() {
+    if (!isReelsHub()) {
+      promptRequested = false;
+      return;
+    }
+    if (!trackingEnabled && !promptRequested) {
+      promptRequested = true;
+      chrome.runtime.sendMessage({ type: 'REELS_DETECTED' });
+    }
   }
 
   function isSponsored(link) {
@@ -90,6 +102,7 @@
   }
 
   const observer = new MutationObserver((mutations) => {
+    requestFirstRunPrompt();
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         if (node.nodeType === Node.ELEMENT_NODE) {
@@ -100,17 +113,25 @@
   });
 
   readTrackingState();
+  chrome.storage.local.get(['participantId'], (settings) => {
+    if (!settings.participantId) {
+      requestFirstRunPrompt();
+    }
+  });
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local' && changes.trackingEnabled) {
       trackingEnabled = changes.trackingEnabled.newValue === true;
       if (trackingEnabled) {
         inspectLinks(document.body);
       }
+    } else if (areaName === 'local' && changes.participantId) {
+      requestFirstRunPrompt();
     }
   });
 
   if (document.body) {
     observer.observe(document.body, { childList: true, subtree: true });
+    requestFirstRunPrompt();
     inspectLinks(document.body);
   }
 })();

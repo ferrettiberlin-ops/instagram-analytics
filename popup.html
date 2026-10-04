@@ -12,6 +12,7 @@
     p { margin: 0 0 18px; color: #526079; line-height: 1.45; font-size: 13px; }
     label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 700; }
     input { box-sizing: border-box; width: 100%; padding: 10px 11px; border: 1px solid #cbd3e1; border-radius: 6px; font: inherit; }
+    select { box-sizing: border-box; width: 100%; padding: 10px 11px; border: 1px solid #cbd3e1; border-radius: 6px; font: inherit; background: white; }
     button { width: 100%; margin-top: 12px; padding: 10px 12px; border: 0; border-radius: 6px; color: white; background: #145da0; font: inherit; font-weight: 700; cursor: pointer; }
     button.secondary { color: #21405d; background: #dce7f2; }
     .status { margin: 16px 0; padding: 12px; border-left: 3px solid #1a8754; background: #eaf7ef; }
@@ -29,6 +30,31 @@
     <form id="setup-view">
       <label for="participant-id">Participant ID</label>
       <input id="participant-id" name="participantId" autocomplete="off" required pattern="[A-Za-z0-9-]+" maxlength="64">
+      <label for="age-bracket">Age bracket</label>
+      <select id="age-bracket" name="ageBracket" required>
+        <option value="">Select one</option>
+        <option>Under 18</option>
+        <option>18–20</option>
+        <option>21–23</option>
+        <option>24–26</option>
+        <option>27+</option>
+      </select>
+      <label for="cultural-identity">Cultural identity</label>
+      <select id="cultural-identity" name="culturalIdentity" required>
+        <option value="">Select one</option>
+        <option>Local Hong Kong Resident (Chinese Heritage)</option>
+        <option>Local Hong Kong Resident (Generational Ethnic Minority)</option>
+        <option>Expatriate</option>
+        <option>Immigrant / First-Generation Resettlement</option>
+      </select>
+      <label for="hkust-school">HKUST school</label>
+      <select id="hkust-school" name="hkustSchool" required>
+        <option value="">Select one</option>
+        <option>SENG</option>
+        <option>SSCI</option>
+        <option>SBM</option>
+        <option>SHSS</option>
+      </select>
       <button type="submit">Enable tracking</button>
     </form>
 

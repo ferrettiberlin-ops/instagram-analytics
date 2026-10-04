@@ -4,7 +4,21 @@ import {
   STREAM_TABLE
 } from './config.js';
 
+let onboardingTabId = null;
+
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message?.type === 'REELS_DETECTED') {
+    openOnboardingTab();
+    return false;
+  }
+
+  if (message?.type === 'PROFILE_SETUP' && message.profile) {
+    saveProfile(message.profile)
+      .then(() => sendResponse({ ok: true }))
+      .catch(() => sendResponse({ ok: false }));
+    return true;
+  }
+
   if (message?.type !== 'STREAM_BATCH' || !Array.isArray(message.records)) {
     return false;
   }
@@ -15,6 +29,41 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 
   return true;
 });
+
+async function openOnboardingTab() {
+  const settings = await chrome.storage.local.get(['participantId']);
+  if (settings.participantId || onboardingTabId !== null) {
+    return;
+  }
+
+  const tab = await chrome.tabs.create({
+    url: chrome.runtime.getURL('popup.html?onboarding=1')
+  });
+  onboardingTabId = tab.id;
+}
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  if (tabId === onboardingTabId) {
+    onboardingTabId = null;
+  }
+});
+
+async function saveProfile(profile) {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/hkust_research_profiles`, {
+    method: 'POST',
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=minimal'
+    },
+    body: JSON.stringify(profile)
+  });
+
+  if (!response.ok) {
+    throw new Error(`Supabase profile request returned HTTP ${response.status}`);
+  }
+}
 
 async function submitBatch(records) {
   const settings = await chrome.storage.local.get([
