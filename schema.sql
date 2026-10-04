@@ -25,13 +25,13 @@ alter table public.hkust_stream_logs enable row level security;
 create policy "study clients can register profiles"
   on public.hkust_research_profiles
   for insert
-  to anon, authenticated
+  to public
   with check (true);
 
 create policy "study clients can append stream logs"
   on public.hkust_stream_logs
   for insert
-  to anon, authenticated
+  to public
   with check (true);
 
 -- Profile rows remain inaccessible to study clients; the foreign key still

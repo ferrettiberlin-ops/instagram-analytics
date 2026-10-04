@@ -53,7 +53,6 @@ async function saveProfile(profile) {
     method: 'POST',
     headers: {
       apikey: SUPABASE_ANON_KEY,
-      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       'Content-Type': 'application/json',
       Prefer: 'resolution=ignore-duplicates,return=minimal'
     },
@@ -87,7 +86,6 @@ async function submitBatch(records) {
     method: 'POST',
     headers: {
       apikey: SUPABASE_ANON_KEY,
-      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       'Content-Type': 'application/json',
       Prefer: 'return=minimal'
     },
