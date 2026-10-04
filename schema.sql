@@ -6,7 +6,8 @@ create table if not exists public.hkust_research_profiles (
     'Local Hong Kong Resident (Chinese Heritage)',
     'Local Hong Kong Resident (Generational Ethnic Minority)',
     'Expatriate',
-    'Immigrant / First-Generation Resettlement'
+    'Immigrant / First-Generation Resettlement',
+    'Third Culture Kid (TCK)'
   )),
   hkust_school text not null check (hkust_school in ('SENG', 'SSCI', 'SBM', 'SHSS'))
 );

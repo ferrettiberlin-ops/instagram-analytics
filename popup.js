@@ -1,6 +1,6 @@
 const setupView = document.querySelector('#setup-view');
 const activeView = document.querySelector('#active-view');
-const participantInput = document.querySelector('#participant-id');
+const participantInput = document.querySelector('#hkust-sid');
 const activeParticipant = document.querySelector('#active-participant');
 const disableButton = document.querySelector('#disable-tracking');
 const message = document.querySelector('#message');
@@ -16,7 +16,7 @@ function render(settings) {
   const active = settings.trackingEnabled === true && Boolean(settings.participantId);
   setupView.hidden = active;
   activeView.hidden = !active;
-  activeParticipant.textContent = active ? `Participant ID: ${settings.participantId}` : '';
+  activeParticipant.textContent = active ? `HKUST SID: ${settings.participantId}` : '';
   if (active) {
     participantInput.value = settings.participantId;
   }

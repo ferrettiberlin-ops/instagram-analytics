@@ -22,4 +22,4 @@ The extension must not be distributed with a service-role key. The anon key is n
 
 The extension is intentionally limited to the Instagram `/reels/` hub and does not inject page UI. It ignores feed, profile, explore, search, and individual `/reel/<id>/` pages. It uses a passive `MutationObserver`; it does not intercept network traffic or attempt to bypass Instagram controls.
 
-On the first visit to `/reels/`, the extension opens a private onboarding tab for the Participant ID, age bracket, cultural identity, and HKUST school. The profile is submitted before tracking is enabled. Later visits go directly to tracking unless the participant disables it.
+On the first visit to `/reels/`, the extension opens a private onboarding tab for the HKUST SID, age bracket, cultural identity, and HKUST school. The profile is submitted before tracking is enabled. Later visits go directly to tracking unless the participant disables it.
