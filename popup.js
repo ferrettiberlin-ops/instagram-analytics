@@ -7,6 +7,29 @@ const message = document.querySelector('#message');
 const ageBracketInput = document.querySelector('#age-bracket');
 const culturalIdentityInput = document.querySelector('#cultural-identity');
 const hkustSchoolInput = document.querySelector('#hkust-school');
+const ideologicalAlignmentInput = document.querySelector('#ideological-alignment');
+
+function getAnswer(select, otherInput) {
+  return select.value.includes('Please specify') ? otherInput.value.trim() : select.value;
+}
+
+function connectOtherInput(select, otherInput) {
+  const update = () => {
+    const requiresOther = select.value.includes('Please specify');
+    otherInput.hidden = !requiresOther;
+    otherInput.required = requiresOther;
+    if (!requiresOther) {
+      otherInput.value = '';
+    }
+  };
+  select.addEventListener('change', update);
+  update();
+}
+
+connectOtherInput(ageBracketInput, document.querySelector('#age-other'));
+connectOtherInput(culturalIdentityInput, document.querySelector('#cultural-other'));
+connectOtherInput(hkustSchoolInput, document.querySelector('#school-other'));
+connectOtherInput(ideologicalAlignmentInput, document.querySelector('#ideological-other'));
 
 function showMessage(text) {
   message.textContent = text;
@@ -37,9 +60,10 @@ setupView.addEventListener('submit', async (event) => {
       type: 'PROFILE_SETUP',
       profile: {
         participant_id: participantId,
-        age_bracket: ageBracketInput.value,
-        cultural_identity: culturalIdentityInput.value,
-        hkust_school: hkustSchoolInput.value
+        age_bracket: getAnswer(ageBracketInput, document.querySelector('#age-other')),
+        cultural_identity: getAnswer(culturalIdentityInput, document.querySelector('#cultural-other')),
+        hkust_school: getAnswer(hkustSchoolInput, document.querySelector('#school-other')),
+        ideological_alignment: getAnswer(ideologicalAlignmentInput, document.querySelector('#ideological-other'))
       }
     });
     if (!profileResponse?.ok) {

@@ -13,6 +13,7 @@
     label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 700; }
     input { box-sizing: border-box; width: 100%; padding: 10px 11px; border: 1px solid #cbd3e1; border-radius: 6px; font: inherit; }
     select { box-sizing: border-box; width: 100%; padding: 10px 11px; border: 1px solid #cbd3e1; border-radius: 6px; font: inherit; background: white; }
+    .other-input { margin-top: 8px; }
     button { width: 100%; margin-top: 12px; padding: 10px 12px; border: 0; border-radius: 6px; color: white; background: #145da0; font: inherit; font-weight: 700; cursor: pointer; }
     button.secondary { color: #21405d; background: #dce7f2; }
     .status { margin: 16px 0; padding: 12px; border-left: 3px solid #1a8754; background: #eaf7ef; }
@@ -38,16 +39,26 @@
         <option>21–23</option>
         <option>24–26</option>
         <option>27+</option>
+        <option>Other (Please specify)</option>
       </select>
+      <input class="other-input" id="age-other" type="text" maxlength="255" placeholder="Please specify age bracket" hidden>
       <label for="cultural-identity">Cultural identity</label>
       <select id="cultural-identity" name="culturalIdentity" required>
         <option value="">Select one</option>
-        <option>Local Hong Kong Resident (Chinese Heritage)</option>
-        <option>Local Hong Kong Resident (Generational Ethnic Minority)</option>
-        <option>Expatriate</option>
-        <option>Immigrant / First-Generation Resettlement</option>
-        <option>Third Culture Kid (TCK)</option>
+        <option>Local HK</option>
+        <option>Ethnic Minority</option>
+        <option>Immigrant</option>
+        <option>Expat</option>
+        <option>TCK</option>
+        <option>International — Asian</option>
+        <option>International — European</option>
+        <option>International — North American</option>
+        <option>International — African</option>
+        <option>International — Latin American</option>
+        <option>Prefer not to say</option>
+        <option>Other / Mixed Background (Please specify)</option>
       </select>
+      <input class="other-input" id="cultural-other" type="text" maxlength="255" placeholder="Please specify cultural identity" hidden>
       <label for="hkust-school">HKUST school</label>
       <select id="hkust-school" name="hkustSchool" required>
         <option value="">Select one</option>
@@ -55,7 +66,21 @@
         <option>SSCI</option>
         <option>SBM</option>
         <option>SHSS</option>
+        <option>Exchange Student</option>
+        <option>Other / Interdisciplinary Major (Please specify)</option>
       </select>
+      <input class="other-input" id="school-other" type="text" maxlength="255" placeholder="Please specify affiliation" hidden>
+      <label for="ideological-alignment">Political / social stance</label>
+      <select id="ideological-alignment" name="ideologicalAlignment" required>
+        <option value="">Select one</option>
+        <option>Progressive / Liberal / Left-leaning</option>
+        <option>Moderate / Centrist</option>
+        <option>Conservative / Right-leaning</option>
+        <option>Apolitical / Generally Uninterested</option>
+        <option>Prefer not to say</option>
+        <option>My stance is best described as (Please specify)</option>
+      </select>
+      <input class="other-input" id="ideological-other" type="text" maxlength="255" placeholder="Please specify stance" hidden>
       <button type="submit">Enable tracking</button>
     </form>
 

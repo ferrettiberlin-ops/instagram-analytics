@@ -4,7 +4,7 @@
 
 This student-led academic project explores how recommendation engines segment and distribute content streams across the diverse student ecosystem of The Hong Kong University of Science and Technology (HKUST). The study examines chronological Instagram Reel sequences viewed while a participant manually browses the Instagram Reels hub.
 
-The study compares demographic independent variables, including **age bracket**, **HKUST school**, and simplified **cultural identity** categories, against automated chronological Reel stream sequences. Cultural identity options are **Local Hong Kong Resident (Chinese Heritage)**, **Local Hong Kong Resident (Generational Ethnic Minority)**, **Expatriate**, **Immigrant / First-Generation Resettlement**, and **Third Culture Kid (TCK)**.
+The study compares demographic independent variables, including **age bracket**, **HKUST school**, expanded **cultural identity** categories, and a neutral **political / social stance** self-positioning variable, against automated chronological Reel stream sequences. Cultural identity options include local, ethnic minority, immigrant, expatriate, TCK, international regional categories, and participant-specified or prefer-not-to-say responses.
 
 ## What the Extension Collects
 
@@ -12,6 +12,7 @@ While enabled on the Instagram `/reels/` hub, the extension records:
 
 - The participant’s **HKUST SID**, which is a direct university identifier and is stored to link the record to the study profile.
 - The selected age bracket, HKUST school, and cultural identity category.
+- The selected age bracket, HKUST school, cultural identity category, and political / social stance category.
 - Clean, canonical Instagram Reel URLs discovered in chronological order as Instagram renders them.
 - The time each Reel link is recorded, its sequence index, and whether the surrounding content appears to be sponsored.
 
@@ -55,6 +56,7 @@ By checking the box below, I confirm that:
 - I am **18 years of age or older**.
 - I have read and understood this information sheet.
 - I understand that the study collects my HKUST SID as a direct identifier, together with the stated demographic categories and Reel-stream telemetry.
+- I understand that the study collects my HKUST SID as a direct identifier, together with the stated demographic categories, political / social stance category, and Reel-stream telemetry.
 - I understand that the telemetry is pseudonymized for analysis but is not anonymous at the point of collection.
 - I understand the tracking scope, data security, retention, and withdrawal terms above.
 - I voluntarily agree to participate in the study and to enable the extension under these parameters.

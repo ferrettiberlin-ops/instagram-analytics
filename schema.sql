@@ -1,15 +1,10 @@
 create table if not exists public.hkust_research_profiles (
   user_id uuid primary key default gen_random_uuid(),
   participant_id varchar(64) unique not null,
-  age_bracket text not null check (age_bracket in ('Under 18', '18–20', '21–23', '24–26', '27+')),
-  cultural_identity text not null check (cultural_identity in (
-    'Local Hong Kong Resident (Chinese Heritage)',
-    'Local Hong Kong Resident (Generational Ethnic Minority)',
-    'Expatriate',
-    'Immigrant / First-Generation Resettlement',
-    'Third Culture Kid (TCK)'
-  )),
-  hkust_school text not null check (hkust_school in ('SENG', 'SSCI', 'SBM', 'SHSS'))
+  age_bracket varchar(255) not null,
+  cultural_identity varchar(255) not null,
+  hkust_school varchar(255) not null,
+  ideological_alignment varchar(255) not null
 );
 
 create table if not exists public.hkust_stream_logs (
