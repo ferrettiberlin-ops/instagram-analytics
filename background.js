@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message?.type === 'PROFILE_SETUP' && message.profile) {
     saveProfile(message.profile)
       .then(() => sendResponse({ ok: true }))
-      .catch(() => sendResponse({ ok: false }));
+      .catch((error) => sendResponse({ ok: false, error: error.message }));
     return true;
   }
 
@@ -49,13 +49,13 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 });
 
 async function saveProfile(profile) {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/hkust_research_profiles`, {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/hkust_research_profiles?on_conflict=participant_id`, {
     method: 'POST',
     headers: {
       apikey: SUPABASE_ANON_KEY,
       Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       'Content-Type': 'application/json',
-      Prefer: 'return=minimal'
+      Prefer: 'resolution=ignore-duplicates,return=minimal'
     },
     body: JSON.stringify(profile)
   });

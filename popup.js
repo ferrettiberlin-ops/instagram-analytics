@@ -67,14 +67,14 @@ setupView.addEventListener('submit', async (event) => {
       }
     });
     if (!profileResponse?.ok) {
-      throw new Error('Profile setup failed');
+      throw new Error(profileResponse?.error || 'Profile setup failed');
     }
     await chrome.storage.local.set({ participantId, trackingEnabled: true });
     render({ participantId, trackingEnabled: true });
     showMessage('');
     await refreshInstagramTab();
-  } catch {
-    showMessage('Unable to enable tracking. Try again.');
+  } catch (error) {
+    showMessage(error.message || 'Unable to enable tracking. Try again.');
   }
 });
 
