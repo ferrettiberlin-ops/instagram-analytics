@@ -22,6 +22,7 @@ create table if not exists public.hkust_stream_logs (
   participant_id varchar(64) not null references public.hkust_research_profiles(participant_id),
   session_id uuid not null,
   scrolled_at timestamptz not null default now(),
+  scrolled_at_hkt timestamp not null default (now() at time zone 'Asia/Hong_Kong'),
   canonical_url text not null,
   sequence_index integer not null check (sequence_index > 0),
     is_sponsored boolean not null default false,
@@ -47,6 +48,21 @@ begin
 end;
 $$;
 
+create or replace function public.set_hkust_scrolled_at_hkt()
+returns trigger
+language plpgsql
+as $$
+begin
+  new.scrolled_at_hkt := new.scrolled_at at time zone 'Asia/Hong_Kong';
+  return new;
+end;
+$$;
+
+drop trigger if exists hkust_stream_logs_hkt_timestamp on public.hkust_stream_logs;
+create trigger hkust_stream_logs_hkt_timestamp
+before insert or update of scrolled_at on public.hkust_stream_logs
+for each row execute function public.set_hkust_scrolled_at_hkt();
+
 revoke all on function public.purge_hkust_study_data() from public;
 grant execute on function public.purge_hkust_study_data() to postgres, service_role;
 
@@ -70,7 +86,7 @@ select
   participant_id,
   session_id,
   scrolled_at,
-  scrolled_at at time zone 'Asia/Hong_Kong' as scrolled_at_hkt,
+  scrolled_at_hkt,
   canonical_url,
   sequence_index,
   is_sponsored
